@@ -1,6 +1,6 @@
 const { authedClient: client } = require("../../services/twitter")
 
-export const retweet = (uid, retweetID) => {
+const retweet = (retweetID) => {
   client.post("statuses/retweet/:id", { id: retweetID }, (err, res) => {
     if (res) {
       console.log(`====> RETWEET SUCCESS ${retweetID}`)
@@ -9,4 +9,8 @@ export const retweet = (uid, retweetID) => {
       console.log(`====> ERROR in RETWEET ${err}`)
     }
   })
+}
+
+module.exports = {
+  retweet,
 }
