@@ -2,9 +2,10 @@
   "name": "greenify-bot",
   "version": "1.0.0",
   "description": "Greenify's official bot",
-  "main": "src/index",
+  "main": "src/",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/",
+    "dev": "nodemon src/"
   },
   "dependencies": {
     "dotenv": "^5.0.0",
@@ -13,5 +14,17 @@
     "twitter-api-v2": "^1.12.3"
   },
   "author": "Greenify Africa",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Greenify-Africa/greenify-bot.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Greenify-Africa/greenify-bot/issues"
+  },
+  "homepage": "https://github.com/Greenify-Africa/greenify-bot#readme"
 }
