@@ -1,0 +1,24 @@
+{
+  "data": {
+    "attachments": {},
+    "author_id": "1366427705579888645",
+    "entities": {},
+    "geo": {},
+    "id": "1558198660030144514",
+    "source": "Twitter Web App",
+    "text": "Test2 #greenify bot"
+  },
+  "includes": {
+    "users": [
+      {
+        "id": "1366427705579888645",
+        "name": "John Daniels",
+        "username": "johnkoder"
+      }
+    ]
+  },
+  "matching_rules": [
+    { "id": "1557518004430176262", "tag": "greenify hashtag3" },
+    { "id": "1557518004430176264", "tag": "greenify hashtag1" }
+  ]
+}
