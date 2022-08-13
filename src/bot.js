@@ -4,27 +4,17 @@ const { twitterConfig } = require("./config")
 const config = require("./config")
 const { appClient } = require("./services/twitter")
 const { retweet } = require("./utils/tweet")
-// const consumerClient = new TwitterApi({
-//   appKey: config.twitterKeys.consumer_key,
-//   appSecret: config.twitterKeys.consumer_secret,
-//   // accessToken: config.twitterKeys.access_token,
-//   // clientSecret: config.twitterKeys.access_token_secret,
-// })
-
-// For v2
 
 const watch = async () => {
   const client = await appClient.appLogin()
   const rules = await client.v2.streamRules()
 
   if (rules.result_count === 0) {
-    console.log("i ran!!", "added rules!")
-    const addedRules = await client.v2.updateStreamRules({
+    console.log("===> added rules! <===")
+    await client.v2.updateStreamRules({
       add: [
         { value: "#greenify", tag: "greenify hashtag1" },
         { value: "#greenifyafrica", tag: "greenify hashtag2" },
-        // { value: "#Greenify", tag: "greenify hashtag3" },// not needed as twitter api is mad
-        // { value: "#GreenifyAfrica", tag: "greenify hashtag4" },
       ],
     })
   }
@@ -66,18 +56,6 @@ const watch = async () => {
 
 console.log("==== #Greenify Bot Starting... ====")
 watch()
-
-// // freeCodeCamp's Discord Channel Promotion
-
-// const SHARE_DISCORD_CHANNEL_LINK = `
-// Here's the link to the official #100DaysOfCode Discord Channel!
-// Join us to:
-// 1) Get help
-// 2) Help others
-// 3) Connect
-// 4) Discuss anything
-// https://discord.com/invite/k77v9BnDcB
-// `
 
 // const tweetDiscordLink = () => {
 //   const tweet = `${SHARE_DISCORD_CHANNEL_LINK}`
