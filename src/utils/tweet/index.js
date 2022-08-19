@@ -10,12 +10,13 @@ const retweet = (retweetID) => {
   })
 }
 
-const tweet = (retweetID) => {
+const tweet = (tweet) => {
   client.post("statuses/update", { status: tweet }, (err, res) => {
     if (err) {
+      return
     }
     if (res) {
-      console.log(`====> TWEET SUCCESS ${retweetID}`)
+      console.log(`====> TWEET SUCCESS ${tweet}`)
     }
   })
 }
