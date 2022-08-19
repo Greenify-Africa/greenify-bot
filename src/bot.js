@@ -1,9 +1,13 @@
 const { ETwitterStreamEvent, ETwitterApiError } = require("twitter-api-v2")
 const { twitterConfig } = require("./config")
 
+const schedule = require("node-schedule")
 const config = require("./config")
 const { appClient } = require("./services/twitter")
-const { retweet } = require("./utils/tweet")
+const { retweet, tweet } = require("./utils/tweet")
+
+const fs = require("fs")
+const path = require("path")
 
 const watch = async () => {
   const client = await appClient.appLogin()
@@ -32,6 +36,12 @@ const watch = async () => {
     "user.fields": ["username"],
   })
 
+  stream.on(
+    // Emitted when a Twitter sent a signal to maintain connection active
+    ETwitterStreamEvent.DataKeepAlive,
+    () => console.log("... just keeping alive ...")
+  )
+
   console.log("===== streaming service has started =====")
   console.log("===> hunting for tweets <====")
   stream.on(ETwitterStreamEvent.Data, (tweet) => {
@@ -57,21 +67,27 @@ const watch = async () => {
 console.log("==== #Greenify Bot Starting... ====")
 watch()
 
-// const tweetDiscordLink = () => {
-//   const tweet = `${SHARE_DISCORD_CHANNEL_LINK}`
-//   TwitterBot.post("statuses/update", { status: tweet }, () => {
-//     console.log("SUCCESS: Discord Channel Link Sent")
-//   })
-// }
+let index = 0
+const tweetWordOfTheWoek = () => {
+  const buffer = fs.readFileSync(path.resolve("recycling.json"))
+  const allPosts = JSON.parse(buffer)
 
-// // Use cron-job to schedule Discord Channel Promotion
-// const rule = new schedule.RecurrenceRule()
-// rule.dayOfWeek = [0, new schedule.Range(1, 6)]
-// rule.hour = 11
-// rule.minute = 59
+  tweet(allPosts[index].post)
+  index++
 
-// // schedule.scheduleJob(rule, () => {
-// //   // eslint-disable-next-line no-console
-// //   console.log("Cron Job runs successfully")
-// //   tweetDiscordLink()
-// // })
+  if (index == 4) {
+    index = 0
+  }
+}
+
+// // Use cron-job to schedule Posting
+const rule = new schedule.RecurrenceRule()
+rule.dayOfWeek = [0, new schedule.Range(1, 6)]
+rule.hour = 12
+rule.minute = 00
+
+schedule.scheduleJob(rule, () => {
+  // eslint-disable-next-line no-console
+  console.log("Cron Job runs successfully")
+  tweetWordOfTheWoek()
+})
